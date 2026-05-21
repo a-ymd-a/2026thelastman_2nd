@@ -1988,16 +1988,14 @@ function renderHeatmap() {
         if (si > 0) html += `<div style="width:${AISLE}px;flex-shrink:0;"></div>`;
         const count = sec[1] - sec[0] + 1;
         const pad = maxes[si] - count;
-        if (si === lastSi) {
-          for (let p = 0; p < pad; p++) html += empty();
-        }
+        const padL = si === 0 ? 0 : si === lastSi ? pad : Math.floor(pad / 2);
+        const padR = si === 0 ? pad : si === lastSi ? 0 : pad - Math.floor(pad / 2);
+        for (let p = 0; p < padL; p++) html += empty();
         for (let n = sec[0]; n <= sec[1]; n++) {
           const k = `${floor}-${row}-${n}`, cnt = seatMap[k]||0, c = cls(cnt);
           html += `<div class="seat-cell${c?' '+c:''}" style="width:${C}px;height:${C}px;" title="${floor} ${row}열 ${n}번 ${cnt}회"></div>`;
         }
-        if (si !== lastSi) {
-          for (let p = 0; p < pad; p++) html += empty();
-        }
+        for (let p = 0; p < padR; p++) html += empty();
       });
       html += '</div>';
     });
