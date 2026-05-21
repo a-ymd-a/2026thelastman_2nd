@@ -1928,8 +1928,6 @@ function renderStats() {
   let ah = `<tr><th colspan="3" class="role-section-title">생존자</th></tr><tr><th>배우</th><th>총 회차</th><th>관람</th></tr>`;
   survivors.forEach(a => { ah += `<tr><td>${a}</td><td style="color:var(--text3)">${countSch(a)}</td><td>${countAct(a)}</td></tr>`; });
   document.getElementById('stats-actors').innerHTML = ah;
-  document.getElementById('stats-pairs').innerHTML = '';
-
   renderHeatmap();
 
   const paid  = records.filter(r=>r.price != null && r.price !== '');
