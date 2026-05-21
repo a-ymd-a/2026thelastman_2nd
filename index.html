@@ -2118,13 +2118,13 @@ function renderStampBoards() {
     const total      = b.totalSlots;
     const paused     = !!b.paused;
     const { cur, final } = calcStampCounts(b);
-    const pct        = Math.min(100, Math.round(cur / total * 100));
+    const pct        = Math.min(100, Math.round(final / total * 100));
     const finalPct   = Math.min(100, Math.round(final / total * 100));
-    const alldone    = cur >= total;
+    const alldone    = final >= total;
     const milestones = b.milestones || [{ at:5 }, { at:7 }];
-    const nextMs     = [...milestones].sort((a,b2)=>a.at-b2.at).find(m => cur < m.at);
-    const toNext     = nextMs ? nextMs.at - cur : null;
-    const mid5done   = cur >= 5;
+    const nextMs     = [...milestones].sort((a,b2)=>a.at-b2.at).find(m => final < m.at);
+    const toNext     = nextMs ? nextMs.at - final : null;
+    const mid5done   = final >= 5;
 
     let statusHtml = '';
     if (paused)               statusHtml = `<div class="stamp-status-row stamp-status-paused">일시정지 중</div>`;
@@ -2145,8 +2145,8 @@ function renderStampBoards() {
         </div>
       </div>
       <div class="stamp-count-row">
-        <span class="stamp-count-cur">현재 ${cur}칸</span>
-        <span class="stamp-count-final">/ 최종 ${final}칸</span>
+        <span class="stamp-count-cur">현재 ${final}칸</span>
+        <span class="stamp-count-final">/ ${total}칸</span>
       </div>
       <div class="stamp-progress-wrap">
         <div class="progress-bar" style="overflow:visible;">
