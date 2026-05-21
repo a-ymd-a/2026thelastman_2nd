@@ -1,4 +1,4 @@
-const CACHE_NAME = '2026thelastman_2nd-v1';
+const CACHE_NAME = '2026thelastman_2nd-v2';
 const BASE = '/2026thelastman_2nd';
 
 // 앱 시작 시 캐시할 파일들
