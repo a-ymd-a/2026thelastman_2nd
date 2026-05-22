@@ -2556,9 +2556,13 @@ function addStamp() {
 // ---- COUPON ----
 
 // 할인권종 → 쿠폰 키 매핑
-const DISCOUNT_COUPON_MAP = {};
+const DISCOUNT_COUPON_MAP = {
+  '첫공 할인':   'discount40',
+  '프리뷰 할인': 'discount40',
+};
 const DISCOUNT_LABEL = {
   '없음':                  '없음',
+  '첫공 할인':             '첫공 할인 (40%)',
   '프리뷰 할인':           '프리뷰 할인 (40%)',
   '조기예매 할인':         '조기예매 할인 (25%)',
   '창작 후원 할인':        '창작 후원 할인 (20%)',
@@ -2615,7 +2619,11 @@ function openAddStampBoardFromRecord() {
 
 let _couponHistoryKey = '';
 
-const COUPON_ITEMS = [];
+const COUPON_ITEMS = [
+  { key:'discount40',   label:'40% 할인권', short:'40%' },
+  { key:'discount50',   label:'50% 할인권', short:'50%' },
+  { key:'discountPass', label:'증빙패스',   short:'증빙' }
+];
 
 // 도장 달성 보상을 도장판 상태에서 실시간 계산
 // asOf: 날짜 기준 (잔여=오늘, 최종=미래포함 전체)
