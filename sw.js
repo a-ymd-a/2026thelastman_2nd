@@ -1,4 +1,4 @@
-const CACHE_NAME = '2026thelastman_2nd-v3';
+const CACHE_NAME = '2026thelastman_2nd-v4';
 const BASE = '/2026thelastman_2nd';
 
 // 앱 시작 시 캐시할 파일들
@@ -32,8 +32,13 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // schedule.json — 네트워크 우선 (최신 스케줄), 실패 시 캐시
-  if (url.pathname.endsWith('schedule.json') || url.pathname.endsWith('events.json')) {
+  // index.html / schedule.json / events.json — 항상 네트워크 우선, 실패 시 캐시
+  if (
+    url.pathname.endsWith('index.html') ||
+    url.pathname === BASE + '/' ||
+    url.pathname.endsWith('schedule.json') ||
+    url.pathname.endsWith('events.json')
+  ) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
