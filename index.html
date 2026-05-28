@@ -650,6 +650,7 @@
         <option value="창작 후원 할인">창작 후원 할인 (20%)</option>
         <option value="NEO 유료 티켓 소지자 할인">NEO 유료 티켓 소지자 할인 (25%)</option>
         <option value="재관람 할인">재관람 할인 (30%)</option>
+        <option value="초코파이情 할인권">초코파이情 할인권 (50%)</option>
         <option value="복지 할인">복지 할인 (50%)</option>
         <option value="기타">기타</option>
       </select>
@@ -2556,7 +2557,9 @@ function addStamp() {
 // ---- COUPON ----
 
 // 할인권종 → 쿠폰 키 매핑
-const DISCOUNT_COUPON_MAP = {};
+const DISCOUNT_COUPON_MAP = {
+  '초코파이情 할인권': 'discount50',
+};
 const DISCOUNT_LABEL = {
   '없음':                  '없음',
   '첫공 할인':             '첫공 할인 (40%)',
@@ -2565,6 +2568,7 @@ const DISCOUNT_LABEL = {
   '창작 후원 할인':        '창작 후원 할인 (20%)',
   'NEO 유료 티켓 소지자 할인': 'NEO 유료 티켓 소지자 할인 (25%)',
   '재관람 할인':           '재관람 할인 (30%)',
+  '초코파이情 할인권':     '초코파이情 할인권 (50%)',
   '복지 할인':             '복지 할인 (50%)',
   '기타':                  '기타'
 };
