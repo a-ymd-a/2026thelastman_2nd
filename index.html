@@ -1267,9 +1267,15 @@ function saveRecord() {
       }
       saveStampBoards(boards);
     }
+    // 초코파이情 증정 기간 날짜 변경 처리
+    const wasGift = CHOCO_PIE_GIFT_DATES.has(prevRecord?.date);
+    const isGift  = CHOCO_PIE_GIFT_DATES.has(date);
+    if (wasGift && !isGift) autoRemoveChocopieCoupon(editId);
+    else if (!wasGift && isGift) autoGainChocopieCoupon(editId, date, alex);
     showToast('기록이 수정되었습니다');
   } else {
     records.push(record);
+    autoGainChocopieCoupon(record.id, date, alex);
     if (stampBoardId) {
       const toastMsg = applyStampToBoard(stampBoardId, stampQty, date, `${alex} 관람 연동`);
       // 방금 추가된 history에 recordId 심기 (수정 시 정확한 삭제를 위해)
@@ -1437,6 +1443,7 @@ function deleteCurrentRecord() {
     });
     if (stampChanged) saveStampBoards(boards);
   }
+  if (target) autoRemoveChocopieCoupon(target.id);
   saveRecords(records.filter(x => x.id !== currentDetailId));
   closePanel('overlay-detail');
   renderCouponList();
@@ -2555,6 +2562,30 @@ function addStamp() {
 }
 
 // ---- COUPON ----
+
+// 초코파이情 할인권 증정 기간
+const CHOCO_PIE_GIFT_DATES = (() => {
+  const s = new Set();
+  for (let d = 16; d <= 21; d++) s.add(`2026-06-${String(d).padStart(2,'0')}`);
+  s.add('2026-07-07');
+  return s;
+})();
+
+function autoGainChocopieCoupon(recordId, date, alex) {
+  if (!CHOCO_PIE_GIFT_DATES.has(date)) return;
+  const coupons = getCoupons();
+  if (!coupons.discount50.history) coupons.discount50.history = [];
+  coupons.discount50.history.push({ type:'획득', date, comment:`초코파이情 증정 (${alex} 관람)`, qty:1, recordId });
+  saveCoupons(coupons);
+}
+
+function autoRemoveChocopieCoupon(recordId) {
+  const coupons = getCoupons();
+  if (!coupons.discount50?.history) return;
+  const before = coupons.discount50.history.length;
+  coupons.discount50.history = coupons.discount50.history.filter(h => h.recordId !== recordId);
+  if (coupons.discount50.history.length !== before) saveCoupons(coupons);
+}
 
 // 할인권종 → 쿠폰 키 매핑
 const DISCOUNT_COUPON_MAP = {
